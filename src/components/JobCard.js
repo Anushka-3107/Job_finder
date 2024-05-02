@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Grid, Card, CardContent, Typography, Button } from "@mui/material";
 import Container from "@mui/material/Container";
+import BoltIcon from "@mui/icons-material/Bolt";
+
 const JobCard = () => {
   const [jobs, setJobs] = useState();
   const [expanded, setExpanded] = useState(false);
@@ -42,15 +44,29 @@ const JobCard = () => {
 
   return (
     <>
-      <Container maxWidth="lg">
-        <Typography variant="h4" align="center" style={{ marginTop: "20px" }}>
+      <Container
+        className="flex justify-center items-center"
+        style={{ maxWidth: "100%", margin: "0 auto" }}
+      >
+        <Typography
+          variant="h4"
+          className="items-center flex justify-center m-5 p-3"
+        >
           Find Jobs
         </Typography>
-        <Grid container spacing={5} style={{ marginTop: "60px" }}>
+        <Grid container spacing={5} className=" m-16 p-16">
           {jobs &&
             jobs.map((job, index) => (
               <Grid item xs={12} md={4} key={index}>
-                <Card sx={{ maxWidth: 345 }}>
+                <Card  sx={{
+                  maxWidth: 345,
+    boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)",
+    transition: "transform 0.3s, box-shadow 0.3s",
+    "&:hover": {
+      transform: "scale(1.05)",
+      boxShadow: "0px 8px 20px rgba(0, 0, 0, 0.2)",
+    },
+  }} style = {{borderRadius:"14px"}}>
                   <CardContent>
                     <Typography variant="h5" component="div">
                       Company Name {job.title}
@@ -61,25 +77,70 @@ const JobCard = () => {
                     <Typography variant="subtitle1" color="text.secondary">
                       {job.location}
                     </Typography>
-                    <Typography variant="subtitle1" color="text.secondary">
-                      Estimated Salary : {job.minJdSalary} - {job.maxJdSalary}
+                    <Typography variant="subtitle2" color="text.secondary">
+                      Estimated Salary : {job.salaryCurrencyCode}{" "}
+                      {job.minJdSalary} - {job.maxJdSalary} LPA
                     </Typography>
-
                     <Typography variant="body2" paragraph>
-                      {expanded
-                        ? job.jobDetailsFromCompany
-                        : `${job.jobDetailsFromCompany.slice(0, 100)}${
-                            job.jobDetailsFromCompany.length > 100 ? "..." : ""
-                          }`}
-                      <Button onClick={toggleExpanded} className="">
-                        {expanded ? "view less" : "view more"}
+                      <div className="pt-4">
+                        About Company:
+                        <Typography variant="body1" color="text.secondary">
+                          <div className="mt-3 font-bold">
+                            About Us
+                            <Typography>
+                              {expanded
+                                ? job.jobDetailsFromCompany
+                                : `${job.jobDetailsFromCompany.slice(0, 200)}${
+                                    job.jobDetailsFromCompany.length > 200
+                                      ? "..."
+                                      : ""
+                                  }`}
+                            </Typography>
+                          </div>
+                        </Typography>
+                      </div>
+                    </Typography>
+
+                    <div className="mt-2 px-3 py-2 ">
+                      <Button
+                        onClick={toggleExpanded}
+                        className="flex items-center justify-center"
+                      >
+                        {expanded ? "View Less" : "View More"}
                       </Button>
+                    </div>
+
+                    <Typography
+                      variant="body2"
+                      color="text.secondary"
+                      style={{ marginTop: "10px"}}
+                    >
+                      {job.minExp ? (
+                        <>
+                         <Typography style={{color:"gray" }}>Minimum Experience</Typography> 
+                          <div className="flex flex-col text-gray-700">
+                            {job.minExp} years
+                          </div>
+                        </>
+                      ) : (
+                        " "
+                      )}
                     </Typography>
 
-
-                    <Typography variant="body2" color="text.secondary">
-                      Experience Required: {job.experience}
-                    </Typography>
+                    <Button
+                      variant="contained"
+                      style={{
+                        display: "block",
+                        width: "100%",
+                        margin: "0 auto",
+                        marginTop: "10px",
+                        backgroundColor: "#41C9E2",
+                      }}
+                    >
+                      <Typography>
+                        <BoltIcon style={{ color: "yellow" }} /> Easy Apply
+                      </Typography>
+                    </Button>
                   </CardContent>
                 </Card>
               </Grid>
