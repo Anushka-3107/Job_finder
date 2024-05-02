@@ -71,7 +71,7 @@ const JobCard = () => {
                         : `${job.jobDetailsFromCompany.slice(0, 100)}${
                             job.jobDetailsFromCompany.length > 100 ? "..." : ""
                           }`}
-                      <Button onClick={toggleExpanded}>
+                      <Button onClick={toggleExpanded} className="">
                         {expanded ? "view less" : "view more"}
                       </Button>
                     </Typography>
