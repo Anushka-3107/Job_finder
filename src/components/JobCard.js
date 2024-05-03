@@ -8,6 +8,7 @@ const JobCard = () => {
   const [expanded, setExpanded] = useState(false);
 
   useEffect(() => {
+    // api rendering
     const myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
     const raw = JSON.stringify({
@@ -30,7 +31,6 @@ const JobCard = () => {
           console.log(result.jdList);
         } else {
           console.error("API response does not contain jdList array:", result);
-          // Handle the response appropriately
         }
       })
       .catch((error) => {
@@ -38,8 +38,13 @@ const JobCard = () => {
       });
   }, []);
 
-  const toggleExpanded = () => {
-    setExpanded(!expanded);
+  const toggleExpanded = (index) => {
+    setExpanded(index === expanded ? null : index);
+  };
+
+  // this function capitalizes the first character
+  const capitalizeFirstLetter = (string) => {
+    return string.charAt(0).toUpperCase() + string.slice(1);
   };
 
   return (
@@ -48,34 +53,37 @@ const JobCard = () => {
         className="flex justify-center items-center"
         style={{ maxWidth: "100%", margin: "0 auto" }}
       >
-        <Typography
+        {/* <Typography
           variant="h4"
           className="items-center flex justify-center m-5 p-3"
         >
           Find Jobs
-        </Typography>
+        </Typography> */}
         <Grid container spacing={5} className=" m-16 p-16">
           {jobs &&
             jobs.map((job, index) => (
               <Grid item xs={12} md={4} key={index}>
-                <Card  sx={{
-                  maxWidth: 345,
-    boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)",
-    transition: "transform 0.3s, box-shadow 0.3s",
-    "&:hover": {
-      transform: "scale(1.05)",
-      boxShadow: "0px 8px 20px rgba(0, 0, 0, 0.2)",
-    },
-  }} style = {{borderRadius:"14px"}}>
+                <Card
+                  sx={{
+                    maxWidth: 345,
+                    boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)",
+                    transition: "transform 0.3s, box-shadow 0.3s",
+                    "&:hover": {
+                      transform: "scale(1.05)",
+                      boxShadow: "0px 8px 20px rgba(0, 0, 0, 0.2)",
+                    },
+                  }}
+                  style={{ borderRadius: "14px" }}
+                >
                   <CardContent>
                     <Typography variant="h5" component="div">
-                      Company Name {job.title}
+                     {job.companyName}
                     </Typography>
                     <Typography variant="subtitle1" color="text.secondary">
-                      {job.jobRole}
+                      {capitalizeFirstLetter(job.jobRole)}
                     </Typography>
                     <Typography variant="subtitle1" color="text.secondary">
-                      {job.location}
+                      {capitalizeFirstLetter(job.location)}
                     </Typography>
                     <Typography variant="subtitle2" color="text.secondary">
                       Estimated Salary : {job.salaryCurrencyCode}{" "}
@@ -88,10 +96,10 @@ const JobCard = () => {
                           <div className="mt-3 font-bold">
                             About Us
                             <Typography>
-                              {expanded
+                              {expanded === index
                                 ? job.jobDetailsFromCompany
-                                : `${job.jobDetailsFromCompany.slice(0, 200)}${
-                                    job.jobDetailsFromCompany.length > 200
+                                : `${job.jobDetailsFromCompany.slice(0, 250)}${
+                                    job.jobDetailsFromCompany.length > 250
                                       ? "..."
                                       : ""
                                   }`}
@@ -101,23 +109,25 @@ const JobCard = () => {
                       </div>
                     </Typography>
 
-                    <div className="mt-2 px-3 py-2 ">
+                    <div className=" flex justify-center items-center">
                       <Button
-                        onClick={toggleExpanded}
+                        onClick={()=>toggleExpanded(index)}
                         className="flex items-center justify-center"
                       >
-                        {expanded ? "View Less" : "View More"}
+                        {expanded === index ? "View Less" : "View Job"}
                       </Button>
                     </div>
 
                     <Typography
                       variant="body2"
                       color="text.secondary"
-                      style={{ marginTop: "10px"}}
+                      style={{ marginTop: "10px" }}
                     >
                       {job.minExp ? (
                         <>
-                         <Typography style={{color:"gray" }}>Minimum Experience</Typography> 
+                          <Typography style={{ color: "gray" }}>
+                            Minimum Experience
+                          </Typography>
                           <div className="flex flex-col text-gray-700">
                             {job.minExp} years
                           </div>
@@ -134,13 +144,31 @@ const JobCard = () => {
                         width: "100%",
                         margin: "0 auto",
                         marginTop: "10px",
-                        backgroundColor: "#41C9E2",
+                        backgroundColor: "#57DBA0",
+                        color: "black",
                       }}
                     >
                       <Typography>
                         <BoltIcon style={{ color: "yellow" }} /> Easy Apply
                       </Typography>
                     </Button>
+
+                    <Button
+                      variant="contained"
+                      style={{
+                        display: "block",
+                        width: "100%",
+                        margin: "0 auto",
+                        marginTop: "10px",
+                        backgroundColor: "#4B57DB",
+                        color: "white",
+                      }}
+                    >
+                      <Typography>
+                       Ask For Referral
+                      </Typography>
+                    </Button>
+
                   </CardContent>
                 </Card>
               </Grid>
