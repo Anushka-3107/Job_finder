@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Grid, Card, CardContent, Typography, Button } from "@mui/material";
 import Container from "@mui/material/Container";
 import BoltIcon from "@mui/icons-material/Bolt";
+import CheckBoxIcon from '@mui/icons-material/CheckBox';
 
 const JobCard = () => {
   const [jobs, setJobs] = useState();
@@ -53,12 +54,7 @@ const JobCard = () => {
         className="flex justify-center items-center"
         style={{ maxWidth: "100%", margin: "0 auto" }}
       >
-        {/* <Typography
-          variant="h4"
-          className="items-center flex justify-center m-5 p-3"
-        >
-          Find Jobs
-        </Typography> */}
+    
         <Grid container spacing={5} className=" m-16 p-16">
           {jobs &&
             jobs.map((job, index) => (
@@ -84,11 +80,13 @@ const JobCard = () => {
                     </Typography>
                     <Typography variant="subtitle1" color="text.secondary">
                       {capitalizeFirstLetter(job.location)}
-                    </Typography>
-                    <Typography variant="subtitle2" color="text.secondary">
+                   </Typography>
+
+                   <Typography variant="subtitle2" color="text.secondary">
                       Estimated Salary : {job.salaryCurrencyCode}{" "}
-                      {job.minJdSalary} - {job.maxJdSalary} LPA
+                      {job.minJdSalary} - {job.maxJdSalary} LPA 
                     </Typography>
+                    
                     <Typography variant="body2" paragraph>
                       <div className="pt-4">
                         About Company:

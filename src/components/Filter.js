@@ -45,7 +45,7 @@ const Filter = () => {
     <div className='flex justify-center'>
       <div >
         {filters.map((filter) => (
-          <FormControl key={filter.name} sx={{ minWidth: 150, mr: 2 ,width: 200}}>
+          <FormControl key={filter.name} sx={{ minWidth: 150, mr: 2 ,width: 250}}>
             <InputLabel id={`demo-multiple-${filter.name.toLowerCase()}-label`}>{filter.name}</InputLabel>
             <Select
               labelId={`demo-multiple-${filter.name.toLowerCase()}-label`}
